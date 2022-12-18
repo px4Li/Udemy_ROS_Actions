@@ -1,27 +1,23 @@
 # ROS Actions
-## 1.1. Why ROS Actions?
-### 1.1.1. ROS communication tools:
+## Section 1: Introduction
+### 1.1. Why ROS Actions?
+- ROS communication tools:
+  - Topics:
+    ![topics](/image/topic.png)
+  - Services:
+    ![services](/image/service.png)
+  - Execution time can be quite long, client is stuck waiting
+      - How to cancel current execution?
+      - How to get feedback from the server?
+      - How to handle multiple commands?
 
-- Topics:
+      ![example](/image/example_1.png)
 
-![topics](/image/topic.png)
+  - Proble with services:
+      - Synchronous 
+      - Only made for quick actions and computations
 
-- Services:
-
-![services](/image/service.png)
-
-- Execution time can be quite long, client is stuck waiting
-    - How to cancel current execution?
-    - How to get feedback from the server?
-    - How to handle multiple commands?
-
-    ![example](/image/example_1.png)
-
-- Proble with services:
-    - Synchronous 
-    - Only made for quick actions and computations
-
-### 1.1.2. What are ROS Actions?
+### 1.2. What are ROS Actions?
 ![ros actions](/image/ros_action_topics.png)
 - With ROS Actions you can：
   - Asynchronously execute goals
@@ -36,3 +32,10 @@
     - Handle multiple goals
     - Create your own goal policy 
     - more..
+
+## Section 2: Discover Actions With SimpleActionClient/SimpleActionServer
+### 2.1 Create an Action Definition and Generate the Action Messages
+- Create new package:
+  ```ros
+  catkin_create_pkg my_robot_msgs roscpp rospy std_msgs actionlib_msgs
+  ```
