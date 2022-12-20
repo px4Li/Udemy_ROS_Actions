@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#! /usr/bin/env python3
 
 import rospy
 import actionlib
@@ -6,6 +6,7 @@ import actionlib
 from my_robot_msgs.msg import CountUntilAction
 from my_robot_msgs.msg import CountUntilGoal
 from my_robot_msgs.msg import CountUntilResult
+from my_robot_msgs.msg import CountUntilFeedback
 
 class CountUntilServer:
     def __init__(self):
@@ -21,17 +22,24 @@ class CountUntilServer:
     def on_goal(self, goal):
         rospy.loginfo("A goal has been received!")
         rospy.loginfo(goal)
+  
         max_number = goal.max_number
         wait_duration = goal.wait_duration
+       
         self._counter = 0
         rate = rospy.Rate(1.0/wait_duration)
 
         while self._counter < max_number:
             self._counter += 1
+            rospy.loginfo(self._counter)
+            feedback = CountUntilFeedback()
+            feedback.percentage = float(self._counter)/float(max_number)
+            self._as.publish_feedback(feedback)
             rate.sleep()
 
         result = CountUntilResult()
         result.count = self._counter
+        rospy.loginfo("send goal result to client")
         self._as.set_succeeded(result)
 
 if __name__=='__main__':
