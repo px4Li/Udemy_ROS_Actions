@@ -15,19 +15,20 @@ class CountUntilClient:
         rospy.loginfo("Action server is up, we can send new goals!")
 
     def send_goal_and_get_result(self):
-        goal = CountUntilGoal(max_number=7, wait_duration=0.7)
+        goal = CountUntilGoal(max_number=25, wait_duration=0.5)
         self._ac.send_goal(goal, 
                 done_cb=self.done_callback,
                 feedback_cb=self.feedback_callback)
         rospy.loginfo("Goal has been sent.")
 
-        success = self._ac.wait_for_result(rospy.Duration(3.0))
-        if not success:
-            rospy.logwarn("TIMEOUT")
-        rospy.loginfo(self._ac.get_result())
-		# Uncomment to cancel the goal after 2 seconds
-        #rospy.sleep(2)
-        #self._ac.cancel_goal()
+        #success = self._ac.wait_for_result(rospy.Duration(3.0))
+        #if not success:
+        #    rospy.logwarn("TIMEOUT")
+        #rospy.loginfo(self._ac.get_result())
+		
+  # Uncomment to cancel the goal after 2 seconds
+        rospy.sleep(2)
+        self._ac.cancel_goal()
 
     def done_callback(self, status, result):
         rospy.loginfo("Status is : " + str(status))
